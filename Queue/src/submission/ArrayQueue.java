@@ -4,18 +4,29 @@ import adt.Queue;
 
 public class ArrayQueue<T> implements Queue<T> {
 	private T[] data;
-	private int head, tail;
+	private int head, tail = 0;
+	private int size = data.length;
 	
 	@Override
 	public void enqueue(T newEntry) {
-		// TODO Auto-generated method stub
+		if(size==0) {
+			data[head] = newEntry;
+		} else {
+			int index = 0;
+			while(data[index]!=null){
+				index++;
+			}
+			tail = index;
+			data[index] = newEntry;
+		}
 		
 	}
 
 	@Override
 	public T dequeue() {
-		// TODO Auto-generated method stub
-		return null;
+		T current = data[tail];
+		tail--;
+		return current;
 	}
 
 	@Override

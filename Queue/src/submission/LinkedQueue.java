@@ -4,35 +4,47 @@ import adt.Queue;
 
 public class LinkedQueue<T> implements Queue<T> {
 	private Node head, tail;
+	private int numEntries = 0;
 	
 	@Override
 	public void enqueue(T newEntry) {
-		// TODO Auto-generated method stub
-		
+		// TODO Write method to "push" item into the "line"
+		// Q: Should I write it so that every "enqueue" adds to the end to retain the front?
+		//    or should I write it just like Stack but keep track of the "first" item
+		//    - If latter: How can I get "head.prev"? (because head.next would be null)
+		if(numEntries==0) head = new Node(newEntry);
+		while(head.next!=null){
+			head = head.next;
+		} head.next = new Node(newEntry);
+		tail = head.next; // Necessary?
+		numEntries++;
 	}
 
 	@Override
 	public T dequeue() {
-		// TODO Auto-generated method stub
-		return null;
+		T current = head.data;
+		head = head.next;
+		numEntries--;
+		return current;
 	}
 
 	@Override
 	public T peek() {
-		// TODO Auto-generated method stub
-		return null;
+		// Should this return the beginning of the line or the end?
+		// I think beginning...
+		return head.data;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		if(numEntries==0) return true;
+		else return false;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		head = new Node(null);
+		numEntries = 0 ;
 	}
 	
 	public String toString() {
