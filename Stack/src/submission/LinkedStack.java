@@ -4,35 +4,44 @@ import adt.Stack;
 
 public class LinkedStack<T> implements Stack<T> {
 	private Node top;
+	private int stackSize = 0;
 	
 	@Override
 	public void push(T newEntry) {
-		// TODO Auto-generated method stub
-		
+		top = new Node(newEntry,top);
+		stackSize++;
 	}
 
 	@Override
+	// TODO Should remove an item form the linked stack
 	public T pop() {
-		// TODO Auto-generated method stub
-		return null;
+		if (this.isEmpty() == false){
+			T current = top.data;
+			top = top.next;
+			stackSize--;
+			return current;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
+	// Should return the data of 'this'?
 	public T peek() {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.isEmpty() == false) return top.data;
+		else return null;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		if(stackSize == 0) return true;
+		else return false;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		top = null;
+		stackSize = 0;
 	}
 	
 	public String toString() {
