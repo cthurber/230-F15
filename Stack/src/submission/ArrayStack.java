@@ -3,37 +3,44 @@ package submission;
 import adt.Stack;
 
 public class ArrayStack<T> implements Stack<T> {
-	private T[] data;
-	private int top;
-
+	private int MaxSize = 102;
+	private T[] data = (T[]) new Object[MaxSize];
+	private int top = -1;
+	private int stackSize = data.length;
+	
+	
 	@Override
+	// One ontop of the other
 	public void push(T newEntry) {
-		// TODO Auto-generated method stub
-		
+		top++;
+		data[top] = newEntry;
 	}
 
 	@Override
 	public T pop() {
-		// TODO Auto-generated method stub
-		return null;
+		if(!this.isEmpty()) {
+			T temp = data[top];
+			top--;
+			return temp;
+		}
+		else return null;
 	}
 
 	@Override
 	public T peek() {
-		// TODO Auto-generated method stub
-		return null;
+		return data[top];
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		if(top==-1) return true;
+		else return false;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		data = (T[]) new Object[MaxSize];
+		top = -1;
 	}
 	
 	public String toString() {
