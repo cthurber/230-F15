@@ -4,10 +4,9 @@ import adt.Queue;
 
 public class ArrayQueue<T> implements Queue<T> {
 	private T[] data;
-	private int head, tail = 0;
+	private int head, tail;
 	private static int DEFAULT_CAPACITY = 100;
 	
-	/*
     public ArrayQueue() {
        tail = 0;
        data = (T[])(new Object[DEFAULT_CAPACITY]);
@@ -17,12 +16,9 @@ public class ArrayQueue<T> implements Queue<T> {
        tail = 0;
        data = (T[])(new Object[initialCapacity]);
     }
-    */
-	
+    
 	@Override
 	public void enqueue (T element) {
-//       if (size() == data.length) 
-//          expandCapacity();
        data[tail] = element;
        tail++;
     }
@@ -33,15 +29,10 @@ public class ArrayQueue<T> implements Queue<T> {
           return null;
  
        T result = data[0];
- 
        tail--;
- 
-       /** shift the elements  */
-       for (int scan=0; scan < tail; scan++)
-          data[scan] = data[scan+1];
-       
-       data[tail] = null;
- 
+       for (int look=0; look < tail; look++)
+          data[look] = data[look+1];
+       //data[tail] = null;
        return result;
     }
 
@@ -49,7 +40,7 @@ public class ArrayQueue<T> implements Queue<T> {
 	public T peek() {
        if (isEmpty())
           return null;  
-       return data[0];
+       return data[head];
     }
 
 	@Override
@@ -59,9 +50,8 @@ public class ArrayQueue<T> implements Queue<T> {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		data = (T[]) new Object[DEFAULT_CAPACITY];
-		head = 0;
+		// Less efficient: while(!isEmpty()) this.dequeue();
+		data = (T[])(new Object[DEFAULT_CAPACITY]);
 		tail = 0;
 	}
 	
@@ -69,7 +59,7 @@ public class ArrayQueue<T> implements Queue<T> {
 		String s = "";
 		if (!isEmpty())
 			s = data[head].toString();
-		for (int i = (head+1) % data.length; i <= (tail + data.length) % data.length; i++)
+		for (int i = (head+1) % data.length; i <= (tail + data.length-1) % data.length; i++)
 			s += " -> " + data[i];
 		s+= "\n";
 		return s;
