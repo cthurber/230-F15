@@ -3,47 +3,41 @@ package submission;
 import adt.Queue;
 
 public class LinkedQueue<T> implements Queue<T> {
-	private Node head, tail;
+	private Node head, tail = null;
 	private int numEntries = 0;
 	
 	@Override
 	public void enqueue(T newEntry) {
-		// TODO Write method to "push" item into the "line"
-		// Q: Should I write it so that every "enqueue" adds to the end to retain the front?
-		//    or should I write it just like Stack but keep track of the "first" item
-		//    - If latter: How can I get "head.prev"? (because head.next would be null)
-		if(numEntries==0) head = new Node(newEntry);
-		while(head.next!=null){
-			head = head.next;
-		} head.next = new Node(newEntry);
-		tail = head.next; // Necessary?
-		numEntries++;
+		Node oldlast = tail;
+		tail = new Node(newEntry,null);
+        if (isEmpty()) head = tail;
+        else oldlast.next = tail;
+        numEntries++;
 	}
 
 	@Override
 	public T dequeue() {
-		T current = head.data;
-		head = head.next;
-		numEntries--;
-		return current;
+		if (isEmpty()) return null;
+        T data = head.data;
+        head = head.next;
+        numEntries--;
+        return data;
 	}
 
 	@Override
 	public T peek() {
-		// Should this return the beginning of the line or the end?
-		// I think beginning...
-		return head.data;
+		if(isEmpty()) return null;
+		else return head.data;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		if(numEntries==0) return true;
-		else return false;
+		return head == null;
 	}
 
 	@Override
 	public void clear() {
-		head = new Node(null);
+		head = null;
 		numEntries = 0 ;
 	}
 	
