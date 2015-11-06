@@ -32,7 +32,6 @@ public class ArrayQueue<T> implements Queue<T> {
        tail--;
        for (int look=0; look < tail; look++)
           data[look] = data[look+1];
-       //data[tail] = null;
        return result;
     }
 
@@ -40,7 +39,7 @@ public class ArrayQueue<T> implements Queue<T> {
 	public T peek() {
        if (isEmpty())
           return null;  
-       return data[head];
+       return data[0];
     }
 
 	@Override
