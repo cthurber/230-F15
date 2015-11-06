@@ -3,7 +3,7 @@ package submission;
 import adt.Queue;
 
 public class LinkedQueue<T> implements Queue<T> {
-	private Node head, tail = null;
+	private Node head, tail;
 	private int numEntries = 0;
 	
 	@Override
