@@ -8,7 +8,7 @@ import adt.Queue;
 import submission.*;
 
 public class ArrayQueueTest {
-	private Queue<String> queue = new ArrayQueue<String>();
+	private ArrayQueue<String> queue = new ArrayQueue<String>();
 	private static int MAX_CAPACITY = 100;
 
 	@Test
