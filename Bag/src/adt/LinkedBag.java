@@ -22,6 +22,11 @@ public class LinkedBag<T> implements BagInterface<T>{
 	public int getCurrentSize() {
 		return numEntries;
 	}
+	
+	public int getNumNodes(Node n, int count) {
+		if(n!=null) return getNumNodes(n.next,count+1);
+		else return count;
+	}
 
 	@Override
 	public boolean isEmpty() {
@@ -70,13 +75,22 @@ public class LinkedBag<T> implements BagInterface<T>{
 
 	@Override
 	public int getFrequencyOf(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+		Node n = head;
+		int freq = 0;
+		while(n!=null) {
+			if(n.data.equals(anEntry)) freq++;
+			n=n.next;
+		}
+		return freq;
 	}
 
 	@Override
 	public boolean contains(T anEntry) {
-		// TODO Auto-generated method stub
+		Node n = head;
+		while(n!=null) {
+			if(n.data.equals(anEntry)) return true;
+			n=n.next;
+		}
 		return false;
 	}
 
@@ -161,8 +175,10 @@ public class LinkedBag<T> implements BagInterface<T>{
 		baga.add("230");
 		baga.add("CSCI");
 		System.out.println("Before: "+baga.toString());
-		baga.insertAt("really",3);
-		System.out.println("After:  "+baga.toString());
+		
+		System.out.println("CurrentSize: "+baga.getCurrentSize());
+		//System.out.println(baga.head);
+		System.out.println("CurrentSize: "+baga.getNumNodes(baga.head,0));
 	}
 
 }
