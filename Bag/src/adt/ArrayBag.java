@@ -10,7 +10,6 @@ public class ArrayBag<T> implements BagInterface<T> {
 	private static final int DEFAULT_CAPACITY = 10;
 	
 	public ArrayBag() {
-		//bag = (T[]) new Object[DEFAULT_CAPACITY];
 		this(DEFAULT_CAPACITY);
 	}
 	
@@ -25,20 +24,29 @@ public class ArrayBag<T> implements BagInterface<T> {
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return numEntries == 0;
 	}
 
 	@Override
 	public boolean add(T newEntry) {
-		
 		if (!isArrayFull()) {
 			bag[numEntries] = newEntry;
 			numEntries++;
 			return true;
 		}
-		
 		return false;
+	}
+	
+	public boolean insertAt(T anEntry, int index) {
+		if(index>this.bag.length) return false;
+		else {
+			for(int i=numEntries-1; i>=index; i--) {
+				bag[i+1] = bag[i];
+			}
+			bag[index] = anEntry;
+			numEntries++;
+		}
+		return true;
 	}
 
 	private boolean isArrayFull() {
@@ -71,30 +79,28 @@ public class ArrayBag<T> implements BagInterface<T> {
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		this.bag = (T[]) new Object[DEFAULT_CAPACITY];
 	}
 
 	@Override
 	public int getFrequencyOf(T anEntry) {
-		// TODO Auto-generated method stub
-		return 0;
+		int freq = 0;
+		for(int i=0; i<numEntries; i++) {
+			if(bag[i].equals(anEntry)) freq++;
+		}
+		return freq;
 	}
 
 	@Override
 	public boolean contains(T anEntry) {
-		// TODO Auto-generated method stub
+		for(int i=0; i<numEntries; i++) {
+			if(bag[i].equals(anEntry)) return true;
+		}
 		return false;
 	}
 
 	@Override
 	public T[] toArray() {
-		//T[] r = new T[numEntries]; // Java won't let us do this
-//		T[] result = (T[])new Object[numEntries];
-//		for (int i = 0; i < numEntries; i++)
-//			result[i] = bag[i];
-		//return result;
-		//return (T[]) bag.clone(); // throws null pointer exception when called in for each
 		return Arrays.copyOf(bag, numEntries);
 	}
 	
@@ -107,17 +113,19 @@ public class ArrayBag<T> implements BagInterface<T> {
 	
 	// Client to test our implementation
 	public static void main(String[] args) {
-		BagInterface<String> b = new ArrayBag<String>();
-		b.add("orange");
-		for (int i = 0; i < 10; i++) {
-			if (!b.add("apple"))
-				System.err.println("Oops, bag full! " + i);
-		}
-		System.out.println(b);
-		b.remove("orange");
-		System.out.println(b);
-		/*for ( Object entry : b.toArray() )
-			System.out.println((String)entry);*/
+		ArrayBag<String> b = new ArrayBag<String>();
+		b.add("1 thing");
+		b.add("2 thing");
+		b.add("3 thing");
+		b.add("4 thing");
+		System.out.println("Before:");
+		for ( Object entry : b.toArray() )
+			System.out.println((String)entry);
+		b.insertAt("5 thing",2);
+		System.out.println();
+		System.out.println("After:");
+		for ( Object entry : b.toArray() )
+			System.out.println((String)entry);
 	}
 
 }

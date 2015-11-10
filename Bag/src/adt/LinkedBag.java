@@ -31,6 +31,7 @@ public class LinkedBag<T> implements BagInterface<T>{
 	@Override
 	public boolean add(T newEntry) {
 		head = new Node(newEntry, head);
+		numEntries++;
 		return true;
 	}
 
@@ -84,8 +85,7 @@ public class LinkedBag<T> implements BagInterface<T>{
 		T[] array = (T[]) new Object[numEntries];
 		Node n = head;
 		int i = 0;
-		while (n != null) { // could also be for i < numEntries
-			// do something -- copy
+		while (n != null) { 
 			array[i] = n.data;
 			i++;
 			n = n.next;
@@ -93,7 +93,49 @@ public class LinkedBag<T> implements BagInterface<T>{
 		return array;
 	}
 	
+	public boolean insertAt(T anEntry, int spot) {
+		if(spot>numEntries) return false;
+		else {
+			int count = 0;
+			Node n = head;
+			Node prev = head;
+			while(count<spot){
+				prev = n;
+				n = n.next;
+				count++;
+			}
+			prev.next = new Node(anEntry,n);
+			numEntries++;
+			return true;
+		}
+	}
 	
+	public LinkedBag intersection(LinkedBag b) {
+		LinkedBag<T> union = new LinkedBag<T>();
+		Node leadNode;
+		Node lendNode;
+		
+		if(this.getCurrentSize() > b.getCurrentSize()) {
+			leadNode = b.head;
+			lendNode = this.head;
+		} else {
+			leadNode = this.head;
+			lendNode = b.head;
+		}
+		
+		while(leadNode!=null){
+			Node iterNode = lendNode;
+			while(iterNode!=null){
+				System.out.println(leadNode.data+" == "+iterNode.data);
+				if(iterNode.data.equals(leadNode.data)) union.add(iterNode.data);
+				iterNode = lendNode.next;
+			}
+			iterNode = lendNode;
+			leadNode = leadNode.next;
+		}
+		
+		return union;
+	}
 	
 	private class Node 
 	{
@@ -113,18 +155,14 @@ public class LinkedBag<T> implements BagInterface<T>{
 	} // end Node
 	
 	public static void main(String[] args) {
-		LinkedBag<String> bag = new LinkedBag<String>();
-		bag.add("CSCI");
-		bag.add("230");
-		bag.add("is");
-		bag.add("awesome!");
-		System.out.println(bag);
-		bag.remove();
-		System.out.println(bag);
-		bag.remove("CSCI");
-		System.out.println(bag);
-		bag.clear();
-		System.out.println(bag);
+		LinkedBag<String> baga = new LinkedBag<String>();
+		baga.add("awesome!");
+		baga.add("is");
+		baga.add("230");
+		baga.add("CSCI");
+		System.out.println("Before: "+baga.toString());
+		baga.insertAt("really",3);
+		System.out.println("After:  "+baga.toString());
 	}
 
 }
