@@ -43,6 +43,7 @@ public class ArrayQueueTest {
 		queue.enqueue("B");
 		queue.enqueue("C");
 		String s = "A -> B -> C\n";
+		System.out.println(queue.toString());
 		assertTrue(queue.toString().equals(s));
 	}
 	
