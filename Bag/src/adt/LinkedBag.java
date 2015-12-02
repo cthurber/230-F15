@@ -1,5 +1,7 @@
 package adt;
 
+import java.util.HashMap;
+
 
 public class LinkedBag<T> implements BagInterface<T>{
 	private Node head = null;       // Reference to first node
@@ -107,6 +109,19 @@ public class LinkedBag<T> implements BagInterface<T>{
 		return array;
 	}
 	
+	// Method for project CS230
+	public HashMap<Integer,T> toDict() {
+		HashMap<Integer,T> nodeDictionary = new HashMap<Integer,T>();
+		int id = 100000; // Implement 6-digit ID number 
+		Node n = head;
+		
+		while(n!=null){
+			nodeDictionary.put(id, n.data);
+		}
+		
+		return nodeDictionary;
+	}
+	
 	public boolean insertAt(T anEntry, int spot) {
 		if(spot>numEntries) return false;
 		else {
@@ -174,11 +189,13 @@ public class LinkedBag<T> implements BagInterface<T>{
 		baga.add("is");
 		baga.add("230");
 		baga.add("CSCI");
-		System.out.println("Before: "+baga.toString());
+		//System.out.println("Before: "+baga.toString());
 		
-		System.out.println("CurrentSize: "+baga.getCurrentSize());
+		//System.out.println("CurrentSize: "+baga.getCurrentSize());
 		//System.out.println(baga.head);
-		System.out.println("CurrentSize: "+baga.getNumNodes(baga.head,0));
+		//System.out.println("CurrentSize: "+baga.getNumNodes(baga.head,0));
+		
+		System.out.println("Dictionary: "+baga.toDict());
 	}
 
 }
