@@ -5,8 +5,8 @@ public class RecursiveInsertionSorter {
 	private static int first = 0;
 	
 	public static int[] sort(int[] unsorted) {
-			int[] sorted = sorter(unsorted,unsorted.length-1);
-			return sorted;
+		int[] sorted = sorter(unsorted,unsorted.length-1);
+		return sort(sorted); // Don't touch
 	}
 	
 	public static int[] sorter(int[]unsorted, int last){
